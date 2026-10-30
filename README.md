@@ -1,153 +1,204 @@
-﻿# Ashkan Industrial Accounting — Stage 6
+# Ashkan Industrial Accounting
 
-C# Windows Forms application targeting .NET Framework 4.8 with SQL Server persistence and bilingual Persian/English UI.
+**A Modular Industrial Accounting & Financial Management System**
 
-## Stage 6 highlights
-- Administrator-only User Management page
-- Create user accounts with Administrator, Accountant, or Manager role
-- PBKDF2-HMAC-SHA256 password hashes with per-user random salts
-- Activate/deactivate accounts and list account status
-- Audit events for account administration
-- SQL schema in `database/004_UserManagement.sql`
+A desktop-based industrial accounting solution developed with C#, Windows Forms, .NET Framework 4.8 and Microsoft SQL Server.
 
-## Run
-1. Back up any existing database.
-2. Open `AshkanIndustrialAccounting.sln` in Visual Studio 2022 with the .NET desktop development workload and .NET Framework 4.8 targeting pack.
-3. Review `App.config` and configure the `AccountingDb` connection string.
-4. Run database scripts in order as applicable, including `database/004_UserManagement.sql`.
-5. Build and test on Windows before using real accounting data.
+Ashkan Industrial Accounting is designed to demonstrate practical software engineering capabilities in financial workflows, banking operations, account reconciliation, risk monitoring, role-based access control, background processing and enterprise-oriented application architecture.
 
-## Important limitation
-This stage adds SQL-backed user administration, but the current login flow still authenticates the local bootstrap administrator. Newly created SQL users are not yet able to sign in. SQL-backed authentication, lockout enforcement, password reset, and protection against disabling the last active administrator remain follow-up work. Do not treat this build as production-ready until those items and full acceptance tests are complete.
+The project emphasizes maintainable code, separation of responsibilities, operational visibility and a bilingual user experience.
 
+---
 
-## Stage 60
-Bilingual bank-import preview validation messages and improved WinForms preview layout. See `STAGE60_NOTES_FA.md`.
+## Key Features
 
+### Financial & Banking Operations
+- Industrial accounting and financial management workflows
+- Bank account and transaction management
+- Bank reconciliation and discrepancy monitoring
+- Persistent banking alerts
+- Account risk ranking and executive-level prioritization
+- Alert assignment, tracking and resolution history
 
-Stage 61: bank import final duplicate revalidation and SQL concurrency diagnostics (see STAGE61_NOTES_FA.md).
+### Security & Access Management
+- Role-based access control (RBAC)
+- Permission-aware navigation and operations
+- User-specific notification preferences
+- Audit-oriented administrative workflows
+- User-scoped notification management
 
+### Notification Infrastructure
+- In-application notification inbox
+- Independent bank notification worker
+- SQL-based notification processing
+- Transactional outbox and inbox patterns
+- Retry handling and failure tracking
+- Independent email notification worker
+- SMTP configuration support
+- Email delivery history and retry management
 
-Stage 64: Failed bank import audit (migration `database/017_BankImportFailureAudit.sql`), scoped history viewer and privacy-minimized failure codes. See `STAGE64_NOTES_FA.md`.
+### Background Services & Operations Monitoring
+- Worker heartbeat monitoring
+- Background service status tracking
+- Queue monitoring
+- Operational history
+- Daily worker activity metrics
+- Operations Center dashboard
 
+### User Experience
+- Persian and English interface
+- Right-to-left (RTL) and left-to-right (LTR) layouts
+- Desktop-oriented user interface
+- Centralized localization support
 
-### Stage 65–67 — Bank Import Analytics
-Daily account-scoped SQL aggregation of successful and failed bank imports, bilingual analytics UI, UTC date filters, success rate and CSV export. Requires database migrations 016 and 017. See STAGE65_NOTES_FA.md through STAGE67_NOTES_FA.md.
+---
 
-## Stage 68
-Bank import analytics now includes a bilingual, stacked success/failure trend chart (up to 14 recorded days), rendered with WinForms GDI+.
+## Technology Stack
 
-## Stage 69
-Analytics failure-only grid filter, explicit date ordering for chart, bounded report range and CSV export hardening.
+| Area | Technology |
+|---|---|
+| Programming Language | C# |
+| Desktop Framework | Windows Forms |
+| Runtime | .NET Framework 4.8 |
+| IDE | Visual Studio 2022 |
+| Database | Microsoft SQL Server |
+| Data Access | ADO.NET |
+| Background Processing | Independent Worker Applications |
+| Database Messaging | SQL Outbox / Inbox |
+| Email Integration | SMTP |
+| Testing | Python-based automated validation |
 
+---
 
-### Stage 70
-Cross-account bank import comparison with UTC date filters and CSV export. See STAGE70_NOTES_FA.md.
+## Architecture Overview
 
+The application separates desktop functionality from background notification processing.
 
-## Stage 72
-Bank import analytics KPI cards, filtered chart consistency and WinForms paint-handler compile-order correction. See STAGE72_NOTES_FA.md.
-\n\n## Stage 73 — Accurate bank import history pagination\nSee `STAGE73_NOTES_FA.md` for server-side total counts and precise paging behavior.\n
-## Stage 74 — Full history export and print preview
-The bank import history now exports all rows matching the active account/date/user filters (up to a safety limit of 50,000 rows) to Excel-compatible UTF-8 CSV, and provides a multipage print preview over the same filtered result. See `STAGE74_NOTES_FA.md`.
+```text
+Ashkan Industrial Accounting
+│
+├── Desktop Application
+│   ├── Presentation Layer
+│   ├── Business Services
+│   ├── Authorization
+│   ├── Localization
+│   └── Data Access
+│
+├── Bank Notification Worker
+│   └── SQL Outbox / Inbox Processing
+│
+├── Email Notification Worker
+│   └── SMTP Delivery and Retry Handling
+│
+└── Microsoft SQL Server
+    ├── Accounting Data
+    ├── User Management
+    ├── Banking Alerts
+    ├── Notification Queues
+    ├── Worker Monitoring
+    └── Operational History
+```
 
+The worker applications are independently executable components. SQL-based messaging provides a practical integration approach without requiring an additional message broker for the current implementation.
 
-## Stage 75 — Consistent filtered analytics outputs
-Bank import analytics now applies the failures-only filter consistently to the grid, chart, KPI cards, summary, CSV export, and print preview. See `STAGE75_NOTES_FA.md`.
+---
 
-## Stage 76 — Period-over-period bank import analytics
-The bank import analytics view now compares the selected range with the immediately preceding equal-length period. KPI deltas, percentage-point success-rate change, and incoming/outgoing amount changes respect the failures-only filter. See `STAGE76_NOTES_FA.md`.
+## Project Structure
 
+```text
+AshkanAccounting/
+│
+├── AshkanIndustrialAccounting/
+│   ├── UI/
+│   ├── Services/
+│   ├── Models/
+│   └── Data/
+│
+├── BankNotificationWorker/
+│
+├── EmailNotificationWorker/
+│
+├── database/
+│   └── SQL migration scripts
+│
+├── tests/
+│   └── Automated validation tests
+│
+├── README.md
+└── STAGE_NOTES/
+```
 
-## Stage 77 — Bank account risk ranking
+Directory names may evolve as the project develops.
 
-The bank import comparison view now calculates per-account failure rates, flags accounts for review (10%+ failure rate with at least one failed attempt), supports operational filters, and exports the currently visible ranking to CSV. See `STAGE77_NOTES_FA.md`.
+---
 
-## Stage 78 – Bank Alert Center
-Adds a bilingual bank alert center with severity filters, actionable recommendations, date-range validation, and filtered UTF-8 CSV export. Alerts are derived from existing import success/failure analytics and are not persisted in this stage. See `STAGE78_NOTES_FA.md`.
+## Getting Started
 
-## Stage 79 – Persistent Bank Alert Workflow
-Adds SQL Server persistence for bank alert snapshots, status tracking (`New`, `InProgress`, `Resolved`), resolver audit fields, status filtering, and filtered CSV export. Run `database/019_BankImportAlerts.sql` after the prior migrations. See `STAGE79_NOTES_FA.md`.
+### Prerequisites
 
+- Windows
+- Visual Studio 2022
+- .NET Framework 4.8 Developer Pack
+- Microsoft SQL Server
+- SQL Server Management Studio (SSMS)
 
-## Stage 80 — Bank alert investigation workflow
+### Installation
 
-Adds alert assignment, due dates, priority, investigation notes and transactional change history. Apply `database/020_BankImportAlertWorkflow.sql` after backing up the database. See `STAGE80_NOTES_FA.md`.
+1. Clone the repository:
 
-## Stage 81 — Bank Alert Management Dashboard
-Adds date-scoped management reporting for status, severity, priority, assignment coverage, overdue/on-time SLA buckets, and open/resolved totals. No new migration is required; see `STAGE81_NOTES_FA.md`.
+   ```bash
+   git clone https://github.com/ashkan20171/Ashkan-Industrial-Accounting.git
+   ```
 
-## Stage 82 — Bank alert performance analytics
+2. Open the solution in Visual Studio 2022.
 
-Extended the bank-alert management report with monthly alert trends, open workload by current assignee (including unassigned alerts), and average resolution time in minutes. The resolution metric uses the first detection and final resolution timestamps and excludes invalid intervals. Existing cash/bank permission checks and bounded parameterized date filters remain in place. See `STAGE82_NOTES_FA.md` for interpretation and limitations.
+3. Configure the SQL Server connection strings in the relevant application configuration files.
 
-### Stage 83 — Visual Bank Alert Dashboard
+4. Review the database migration scripts in the `database` directory and apply them in the required order.
 
-Adds a resizable bilingual bank-alert dashboard with GDI+ metric bars, category filtering, CSV export and paginated printing/PDF via the Windows PDF printer. No additional charting dependency or database migration is required. See `STAGE83_NOTES_FA.md`.
+5. Configure the worker applications and SMTP settings where applicable.
 
-## Stage 84 — Bank alert efficiency rates
+6. Build the solution and run the desktop application.
 
-Adds period-scoped resolution, overdue-open, and assigned-open percentage metrics to the existing bank alert dashboard. Existing category filtering, charting, CSV export, and printing are reused. No database migration is required.
+> Database configuration and deployment steps should be reviewed against the current project version before production use.
 
-## Stage 85 — Multi-sheet Excel export
+---
 
-Adds a dependency-free SpreadsheetML workbook export to the bank-alert dashboard: one complete report sheet plus a separate worksheet for each metric category. Existing CSV and print/PDF workflows remain available. The generated `.xml` workbook opens in Microsoft Excel; it is not an `.xlsx` package and does not embed native Excel charts. See `STAGE85_NOTES_FA.md`.
+## Engineering Focus
 
-### Stage 86 — Bank alert dashboard filters
-- Added independent bank-account and assignee filters across dashboard metrics, rates, trends and resolution statistics.
-- CSV and multi-sheet Excel exports honor the active dashboard filters.
+This project explores several practical software engineering topics:
 
-### Stage 87 — Executive bank-alert priorities
-- Adds critical-open, critical-overdue, due-within-24-hours and unassigned-critical dashboard metrics.
-- Metrics honor the existing date, bank-account and assignee filters and are available through the `ExecutivePriority` category.
-- No database migration or additional package is required. Due-date comparisons assume `DueAtUtc` is stored in UTC.
+- Separation of concerns
+- Modular application design
+- Role-based authorization
+- SQL Server data management
+- Transactional Outbox and Inbox patterns
+- Background job processing
+- Retry and failure handling
+- Application localization
+- Operational monitoring
+- Maintainability and testability
 
-## Stage 88 – Bank Alert Notification Worker
-- Added an independently deployable .NET Framework 4.8 notification worker.
-- Added a transactional SQL outbox and idempotent in-app notification delivery for newly created or reopened critical bank alerts.
-- Uses SQL Server locking and unique constraints; no external broker or NuGet package is required.
-- Apply `database/021_BankAlertNotifications.sql` after migrations 019 and 020. See `STAGE88_NOTES_FA.md` for deployment details and current limitations.
+---
 
-## Stage 89 – In-app Notification Center
-- Added a bilingual, RTL/LTR-aware notification inbox in the WinForms client.
-- Users can filter unread notifications, refresh the inbox, mark one item read, or mark all as read.
-- Inbox queries and updates are scoped to the authenticated SQL-backed user.
-- The independent `BankNotificationWorker` remains responsible for asynchronous delivery; the UI only reads and acknowledges inbox items.
-- Run database migration `021_BankAlertNotifications.sql` from Stage 88 before using this feature.
+## Current Development Status
 
-### Stage 90 — Notification badge and alert navigation
-- Added a periodically refreshed unread notification count to the main navigation.
-- Notification rows now retain their related bank alert identifier; double-clicking checks cash/bank authorization, marks the inbox item as read, and routes the user to Cash & Bank with the alert identifier shown for follow-up in Bank Alerts.
-- No database migration is required for this stage.
+Ashkan Industrial Accounting is an evolving software engineering portfolio project.
 
-### Stage 91 — Per-user notification preferences
-- Added a bilingual preferences dialog for enabling/disabling in-app notifications and selecting severity levels.
-- Preferences are stored per authenticated user in `UserNotificationPreferences`; missing preference rows default to enabled.
-- The independent worker honors the recipient's settings and acknowledges suppressed outbox events without creating inbox rows.
-- Apply `database/022_UserNotificationPreferences.sql` after the previous migrations. Email/SMS delivery is not included in this stage.
+Development is organized into incremental stages, with ongoing improvements to financial workflows, notification infrastructure, background services, monitoring and user experience.
 
-### Stage 92 — Independent email notification service
-- Added `EmailNotificationWorker`, a separately deployable .NET Framework 4.8 process that polls a SQL email outbox and sends messages through configurable SMTP.
-- Bank notification delivery now enqueues email only when the recipient has a non-empty `AppUsers.Email` address and has explicitly enabled email notifications. Email remains opt-in by default.
-- Added `database/023_EmailNotificationService.sql` to add the optional email field, per-user email preference, and idempotent email queue with retry scheduling and dead-letter status.
-- SMTP host, port, sender, credentials, SSL, polling and retry settings are externalized in the worker's `App.config`. Replace placeholders before running; protect the configuration file because it may contain credentials.
-- Email is generated from the existing in-app notification content. No SMTP provider or credentials are bundled.
+The repository should be considered a development project rather than a certified or production-validated accounting product.
 
+---
 
-### Stage 93 — Email operations administration
-- Added validated user email editing to the admin user-management screen.
-- Added email outbox history with delivery status, attempt count, timestamps and last error.
-- Administrators can requeue DeadLetter messages; actual sending remains the responsibility of the independent SMTP worker.
-- Administrative actions are permission-checked and audited. No additional migration is required beyond Stage 92 migration 023.
+## Author
 
+**Ashkan Motaei**
 
-## Stage 94 — Background Worker Monitoring
-- Added SQL heartbeat reporting for bank and email workers.
-- Added an administrator-only bilingual monitoring screen with worker freshness and queue summaries.
-- Apply `database/024_BackgroundWorkerMonitoring.sql` before using the monitor.
+Software Engineer
 
-## Stage 95 — Operations Center
-- Added durable heartbeat history for both background workers.
-- Added authorized, parameterized recent-history and daily-metrics queries.
-- Extended service monitoring UI with the last 24 hours of heartbeat events.
-- Apply `database/025_OperationsCenterHistory.sql` and redeploy both workers to begin collecting history.
+GitHub: [@ashkan20171](https://github.com/ashkan20171)
+
+---
+
+*Built as an ongoing software engineering project with a focus on enterprise application development, financial workflows and maintainable architecture.*
