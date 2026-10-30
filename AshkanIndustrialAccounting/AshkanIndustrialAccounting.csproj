@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9D53C4F2-482A-48F2-AB0C-6A7B92B6F341}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AshkanIndustrialAccounting</RootNamespace>
+    <AssemblyName>AshkanIndustrialAccounting</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath><DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>true</Optimize><OutputPath>bin\Release\</OutputPath><DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="App_Start\AppBootstrapper.cs" />
+    <Compile Include="Core\Enums\AppLanguage.cs" />
+    <Compile Include="Core\Interfaces\IRepository.cs" />
+    <Compile Include="Core\Models\Account.cs" />
+    <Compile Include="Core\Models\JournalEntry.cs" />
+    <Compile Include="Core\Models\JournalLine.cs" />
+    <Compile Include="Core\Models\IndustrialCostCenter.cs" />
+    <Compile Include="Infrastructure\Data\Db.cs" />
+    <Compile Include="Infrastructure\Data\DbInitializer.cs" />
+    <Compile Include="Infrastructure\Repositories\AccountRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\JournalRepository.cs" />
+    <Compile Include="Services\AccountingService.cs" />
+    <Compile Include="Services\CashBankTransactionService.cs" />
+    <Compile Include="Services\CashBankTransferService.cs" />
+    <Compile Include="Services\BankReconciliationService.cs" />
+    <Compile Include="Services\BankStatementCsv.cs" />
+    <Compile Include="Services\BankImportPreviewValidator.cs" />
+    <Compile Include="Services\BankImportProfileStore.cs" />
+    <Compile Include="Services\BankStatementXlsx.cs" />
+    <Compile Include="Services\InventoryService.cs" />
+    <Compile Include="Services\InventoryJournalService.cs" />
+    <Compile Include="Services\InventoryReconciliationService.cs" />
+    <Compile Include="Services\InventoryValuationReportService.cs" />
+    <Compile Include="Services\SalesPostingService.cs" />
+    <Compile Include="Services\SalesJournalService.cs" />
+    <Compile Include="Services\FinancialRules.cs" />
+    <Compile Include="Services\SalesCostService.cs" />
+    <Compile Include="Services\GrossProfitReportService.cs" />
+    <Compile Include="Services\ProductProfitabilityService.cs" />
+    <Compile Include="Services\FinancialTrendsService.cs" />
+    <Compile Include="Services\ManagementKpiService.cs" />
+    <Compile Include="Services\ReportExportService.cs" />
+    <Compile Include="Services\ReportPrintService.cs" />
+    <Compile Include="Services\FinancialIntegrityAuditService.cs" />
+    <Compile Include="Services\WeightedAverageValuationService.cs" />
+    <Compile Include="Services\SalesReturnService.cs" />
+    <Compile Include="Services\InvoiceDraftService.cs" />
+    <Compile Include="Services\LocalizationService.cs" />
+    <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Services\SecurityService.cs" />
+    <Compile Include="Services\SqlAuthenticationService.cs" />
+    <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\AuditService.cs" />
+    <Compile Include="Services\NotificationInboxService.cs" />
+    <Compile Include="Services\AuditLogQueryService.cs" />
+    <Compile Include="Services\TransactionalAuditService.cs" />
+    <Compile Include="UI\Forms\AuditHistoryForm.cs" />
+    <Compile Include="Services\UserManagementService.cs" />
+    <Compile Include="Services\EmailAdministrationService.cs" />
+    <Compile Include="Services\BackgroundWorkerMonitoringService.cs" />
+    <Compile Include="UI\Controls\MetricCard.cs" />
+    <Compile Include="UI\Controls\UiFactory.cs" />
+    <Compile Include="UI\Controls\GridSearchToolbar.cs" />
+    <Compile Include="UI\Controls\PlaceholderTextBox.cs" />
+    <Compile Include="UI\Forms\LoginForm.cs" />
+    <Compile Include="UI\Forms\MainForm.cs" />
+    <Compile Include="UI\Forms\ServiceMonitoringForm.cs" />
+    <Compile Include="UI\Forms\NotificationCenterForm.cs" />
+    <Compile Include="UI\Forms\DashboardForm.cs" />
+    <Compile Include="UI\Forms\ChartOfAccountsForm.cs" />
+    <Compile Include="UI\Forms\JournalEntryForm.cs" />
+    <Compile Include="UI\Forms\BusinessPartnersForm.cs" />
+    <Compile Include="UI\Forms\SalesForm.cs" />
+    <Compile Include="UI\Forms\ProductsForm.cs" />
+    <Compile Include="UI\Forms\InventoryMovementsForm.cs" />
+    <Compile Include="UI\Forms\CashBankForm.cs" />
+    <Compile Include="UI\Forms\BankReconciliationForm.cs" />
+    <Compile Include="UI\Forms\IndustrialCostingForm.cs" />
+    <Compile Include="UI\Forms\ReportsForm.cs" />
+    <Compile Include="UI\Forms\GrossProfitReportForm.cs" />
+    <Compile Include="UI\Forms\ProductProfitabilityForm.cs" />
+    <Compile Include="UI\Forms\FinancialTrendsForm.cs" />
+    <Compile Include="UI\Forms\FinancialIntegrityAuditForm.cs" />
+    <Compile Include="UI\Forms\InventoryValuationReportForm.cs" />
+    <Compile Include="UI\Forms\SettingsForm.cs" />
+    <Compile Include="UI\Forms\ChangePasswordForm.cs" />
+    <Compile Include="UI\Forms\DatabaseSetupForm.cs" />
+    <Compile Include="UI\Forms\UserManagementForm.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Localization\en.json" />
+    <None Include="Localization\fa.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
